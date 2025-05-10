@@ -52,6 +52,7 @@ function App() {
       <Header />
       <Menu />
       <Footer />
+      <Order />
     </div>
   );
 }
@@ -66,14 +67,18 @@ function Header() {
   );
 }
 function Menu() {
+    const pizzas = pizzaData;
+    const numPizzas = pizzas.length;
   return (
+    
     <main className="menu">
       <h2>Our Menu</h2>
-      <ul className="pizzas">
+      {numPizzas > 0 && (<ul className="pizzas">
         {pizzaData.map((pizza) => (
           <Pizza pizzaObj={pizza} key={pizza.name}/>
         ))}
       </ul>
+      )}
     </main>
   );
 }
@@ -105,10 +110,7 @@ function Footer() {
   return (
     <footer className="footer">
       {isOpen ? (
-        <div className="order">
-          <p>We're open until {closeHour}:00. Come visit us or order online.</p>
-          <button className="btn">Order</button>
-        </div>
+        <Order closeHour={closeHour} openHour={openHour} /> 
       ) : (
         <p>
           We're happy to welcome you between {openHour}:00 and {closeHour}:00.
@@ -116,6 +118,15 @@ function Footer() {
       )}
     </footer>
   );
+}
+function Order({closeHour, openHour}) {
+    return(
+        <div className="order">
+          <p>We're open from {openHour}:00 to {closeHour}:00. Come visit us or order online.</p>
+          <button className="btn">Order</button>
+        </div>
+    )
+
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
